@@ -7,17 +7,7 @@
  */
 ?>
 
-<?php
-if ($_GET['password'] === 'bunnyears') {
-    $_SESSION['accepted'] = true;
-}
-?>
+<?php get_template_part('parts/header'); ?>
 
-<?php if (!$_SESSION['accepted']): ?>
-    <form>
-        <input type="password" name="password"/>
-        <input type="submit" class="btn btn-info">
-    </form>
-<?php else: ?>
-    
-<?php endif; ?>
+
+<?php get_template_part('parts/footer'); ?>

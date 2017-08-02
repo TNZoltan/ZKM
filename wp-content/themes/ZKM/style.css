@@ -1,10 +1,56 @@
+a:visited, a:hover, a:active, a:link{
+    text-decoration: none;
+}
+.hide{
+    display: none;
+}
+#footer{
+    text-align: center;
 
-
-/*
-Planning structure.
-
-Features:
-Add recipe
-Add item
-
- */
+}
+#navigation{
+    width: 100%;
+    max-width: 512px;
+    display: inline-block;
+}
+#navigation ul{
+    list-style-type: none;
+    padding: 0;
+}
+#navigation ul li{
+    display: inline-block;
+    float: left;
+    text-decoration: none;
+    width: 36%;
+    height: 90px;
+    transition: all 0.5s ease;
+    background: #B0E57C;
+    background: linear-gradient(-180deg,#B0E57C, #B0E50F);
+    border-left: 1px solid #B0E200;
+    border-bottom: 1px solid #B0E200;
+}
+#navigation ul li:hover{
+    transform: scale(0.96);
+}
+#navigation ul li:first-of-type{
+    width: 32%;
+    background: #FFF0AA;
+    background: linear-gradient(-180deg,#FFF0AA, #FFF06F);
+    border-left: 1px solid #FFF000;
+    border-bottom: 1px solid #FFF000;
+}
+#navigation ul li:last-of-type{
+    width: 32%;
+    background: #FFAEAE;
+    background: linear-gradient(-180deg,#FFF0AA, #FAF06F);
+    border-left: 1px solid #FFF000;
+    border-bottom: 1px solid #FFF000;
+    border-right: 1px solid #FFF000;
+    color: #FFAEAE;
+}
+#navigation ul li a img{
+    height: 50px;
+    width: 50px;
+    margin: 20px 0;
+    opacity: 0.8;
+}
