@@ -1,56 +1,65 @@
-a:visited, a:hover, a:active, a:link{
-    text-decoration: none;
-}
-.hide{
-    display: none;
-}
-#footer{
-    text-align: center;
+/* Navigation buttons on top */
 
+input[type='radio']{
+    margin:0;padding:0;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
 }
 #navigation{
     width: 100%;
-    max-width: 512px;
     display: inline-block;
+    text-align: center;
 }
-#navigation ul{
-    list-style-type: none;
-    padding: 0;
-}
-#navigation ul li{
+.wrapper{
     display: inline-block;
     float: left;
-    text-decoration: none;
-    width: 36%;
+    transition: all 0.3s ease;
     height: 90px;
-    transition: all 0.5s ease;
+}
+.check-list{
+    width: 36%;
     background: #B0E57C;
     background: linear-gradient(-180deg,#B0E57C, #B0E50F);
     border-left: 1px solid #B0E200;
     border-bottom: 1px solid #B0E200;
 }
-#navigation ul li:hover{
-    transform: scale(0.96);
+.wrapper:hover{
+    transform: translateY(3px);
 }
-#navigation ul li:first-of-type{
+.shopping-list{
     width: 32%;
     background: #FFF0AA;
     background: linear-gradient(-180deg,#FFF0AA, #FFF06F);
     border-left: 1px solid #FFF000;
     border-bottom: 1px solid #FFF000;
 }
-#navigation ul li:last-of-type{
+.recipes-button{
     width: 32%;
     background: #FFAEAE;
-    background: linear-gradient(-180deg,#FFF0AA, #FAF06F);
-    border-left: 1px solid #FFF000;
-    border-bottom: 1px solid #FFF000;
-    border-right: 1px solid #FFF000;
+    background: linear-gradient(-180deg,#FFAEAE, #FFAEBF);
+    border-left: 1px solid #FFAEA0;
+    border-bottom: 1px solid #FFAFA0;
+    border-right: 1px solid #FFAFA0;
     color: #FFAEAE;
 }
-#navigation ul li a img{
+.wrapper img{
     height: 50px;
     width: 50px;
     margin: 20px 0;
     opacity: 0.8;
+}
+
+
+
+/* Footer menu */
+a:visited, a:hover, a:active, a:link{
+    text-decoration: none;
+}
+#footer{
+    text-align: center;
+}
+#menu ul{
+    list-style-type: none;
+    padding: 0;
 }

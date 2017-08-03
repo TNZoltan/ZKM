@@ -12,6 +12,7 @@ Template Name: Recipe
 */
 ?>
 
+
 <?php get_template_part('parts/header'); ?>
 
 
