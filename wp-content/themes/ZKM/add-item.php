@@ -15,19 +15,6 @@ Template Name: Item
 
 <?php get_template_part('parts/header'); ?>
 
-<?php
-include "simple_html_dom.php";
-$search_query = "apple food";
-$search_query = urlencode( $search_query );
-$html = file_get_html( "https://www.google.com/search?q=$search_query&tbm=isch" );
-$containers = $html->getElementById('rg_s');
-var_dump($containers);
-$images = $containers->getElementsByTagName('img');
-foreach($images as $image){
-    echo $image;
-}
-?>
-
 
 <div class="container">
     <div style="padding: 15px;">
@@ -37,12 +24,6 @@ foreach($images as $image){
                 <label for="name" class="col-2 col-form-label">Name</label>
                 <div class="col-10">
                     <input class="form-control" type="text" id="name" name="name">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="image" class="col-2 col-form-label">Image</label>
-                <div class="col-10">
-                    <input class="form-control" type="text" id="image" name="image">
                 </div>
             </div>
             <div class="row">

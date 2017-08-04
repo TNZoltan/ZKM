@@ -7,17 +7,22 @@
  */
 include('../../../../wp-load.php');
 
-
-var_dump($_GET);
+include "../simple_html_dom.php";
+$search_query = $_GET['name'] . ' organic';
+$search_query = urlencode( $search_query );
+$html = file_get_html( "https://www.google.com/search?q=$search_query&tbm=isch" );
+$containers = $html->getElementById('center_col');
+$image = $containers->getElementByTagName('img');
+$imageLink = $image->getAttribute('src');
 
 global $wpdb;
 
-/*$wpdb->insert('food',array (
+$wpdb->insert('food',array (
     'name' => $_GET['name'],
-    'img' =>  $_GET['image'],
+    'img' =>  $imageLink,
     'priority' => $_GET['priority'],
-    'expiry' => $_GET['priority'],
-    'in_fridge' => false
+    'expiry' => $_GET['expiry'],
+    'in_fridge' => 0
 ));
 
-//wp_redirect(get_post_permalink(21));
+wp_redirect(get_post_permalink(21));
