@@ -31,6 +31,7 @@ Template Name: Item
                     <div class="form-group row">
                         <label for="expiry" class="col-2 col-form-label">Shelf life (in days)</label>
                         <div class="col-10">
+                            <?php //TODO Option to not put anything. ?>
                             <input class="form-control" type="number" id="expiry" name="expiry">
                         </div>
                     </div>

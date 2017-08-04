@@ -7,7 +7,7 @@
  */
 include('../../../../wp-load.php');
 
-include "../simple_html_dom.php";
+include "simple_html_dom.php";
 $search_query = $_GET['name'] . ' organic';
 $search_query = urlencode( $search_query );
 $html = file_get_html( "https://www.google.com/search?q=$search_query&tbm=isch" );

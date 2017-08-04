@@ -6,11 +6,11 @@
  * Time: 4:11 PM
  */
 
+
 //Start a session
 if (!session_id()) {
     session_start();
 }
-
 //Add bootstrap to the project
 add_action( 'wp_enqueue_scripts', 'add_styles');
 function add_styles() {
@@ -26,4 +26,13 @@ function add_scripts() {
     wp_enqueue_script('jquery-js');
     wp_register_script( 'bootstrap-js', get_template_directory_uri() . '/library/js/bootstrap.min.js');
     wp_enqueue_script('bootstrap-js');
+}
+
+function getFoodList(){
+    global $wpdb;
+    return $wpdb->get_results('SELECT name FROM food');
+}
+function getIdOfRecord($type,$food){
+    global $wpdb;
+    return $wpdb->get_var('SELECT id FROM '. $type . ' WHERE name = "' . $food . '"');
 }
