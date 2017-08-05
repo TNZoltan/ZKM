@@ -5,7 +5,6 @@ a:visited, a:hover, a:active, a:link{
 }
 
 /* Navigation buttons on top */
-
 input[type='radio']{
     margin:0;padding:0;
     -webkit-appearance:none;
@@ -56,6 +55,25 @@ input[type='radio']{
     margin: 20px 0;
     opacity: 0.8;
 }
+
+/* Content */
+
+#content{
+    margin-top: -3px;
+}
+.food-wrapper{
+    height: 300px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70%;
+
+}
+.food-title{
+    position: absolute;
+}
+
+
 
 /* Footer menu */
 #footer{

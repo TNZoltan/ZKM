@@ -30,7 +30,7 @@ function add_scripts() {
 
 function getFoodList(){
     global $wpdb;
-    return $wpdb->get_results('SELECT name FROM food');
+    return $wpdb->get_results('SELECT name, img, in_fridge FROM food');
 }
 function getIdOfRecord($type,$food){
     global $wpdb;
