@@ -4,6 +4,10 @@ a:visited, a:hover, a:active, a:link{
     text-decoration: none;
 }
 
+[v-cloak] {
+    display: none;
+}
+
 /* Navigation buttons on top */
 input[type='radio']{
     margin:0;padding:0;
@@ -59,20 +63,49 @@ input[type='radio']{
 /* Content */
 
 #content{
-    margin-top: -3px;
+    overflow: auto;
+    margin-top: -6px;
+}
+#content input[type=checkbox]{
+    opacity: 0;
 }
 .food-wrapper{
-    height: 300px;
-    overflow: hidden;
+    height: 200px;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 70%;
-
+    background-size:cover;
+    opacity: 0.8;
+    transition: all 0.7s;
+}
+.inactive{
+    filter: grayscale(1);
+}
+.inactive .food-title{
+    opacity: 0.4;
 }
 .food-title{
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 100%;
+    background-color: rgba(256, 256, 256, 0.7);
 }
-
+.food-title h1{
+    text-align: center;
+    margin: 10px 0;
+    color: #282828;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    mix-blend-mode: multiply;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
 
 
 /* Footer menu */
