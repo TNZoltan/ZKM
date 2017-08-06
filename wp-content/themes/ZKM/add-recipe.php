@@ -22,19 +22,19 @@ Template Name: Recipe
         <h1>Add a new recipe</h1>
         <form action="<?php echo get_template_directory_uri() ?>/parts/save-recipe.php">
             <div class="form-group row">
-                <label for="name" class="col-2 col-form-label">Name</label>
+                <label for="name" class="col-2 col-form-label">Name*</label>
                 <div class="col-10">
                     <input class="form-control" type="text" id="name" name="name">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="desc" class="col-2 col-form-label">Description</label>
+                <label for="desc" class="col-2 col-form-label">Description*</label>
                 <div class="col-10">
                     <textarea class="form-control" id="desc" name="desc"></textarea>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="priority" class="col-2 col-form-label">Ingedients</label>
+                <label for="priority" class="col-2 col-form-label">Ingedients*</label>
                 <div class="col-10">
                     <select id="dropdown-checkbox" name="food[]" multiple="multiple" class="form-control">
 

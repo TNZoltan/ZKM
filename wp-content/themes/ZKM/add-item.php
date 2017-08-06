@@ -21,7 +21,7 @@ Template Name: Item
         <h1>Add a new item</h1>
         <form action="<?php echo get_template_directory_uri() ?>/parts/save-item.php">
             <div class="form-group row">
-                <label for="name" class="col-2 col-form-label">Name</label>
+                <label for="name" class="col-2 col-form-label">Name*</label>
                 <div class="col-10">
                     <input class="form-control" type="text" id="name" name="name">
                 </div>
@@ -38,7 +38,7 @@ Template Name: Item
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group row">
-                        <label for="priority" class="col-2 col-form-label">Priority</label>
+                        <label for="priority" class="col-2 col-form-label">Priority*</label>
                         <div class="col-10">
                             <select name="priority" id="priority" class="form-control">
                                 <option value="1">1 - Item is used frequently.</option>

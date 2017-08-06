@@ -28,9 +28,23 @@ function add_scripts() {
     wp_enqueue_script('bootstrap-js');
 }
 
+function getRequest(){
+    return $_POST;
+}
+
 function getFoodList(){
     global $wpdb;
-    return $wpdb->get_results('SELECT name, img, in_fridge FROM food');
+    return $wpdb->get_results('SELECT id, name, img, priority, in_fridge FROM food');
+}
+function setFoodStatus($foodId,$status){
+    global $wpdb;
+    $data = array(
+        'in_fridge' => $status
+    );
+    $where = array(
+        'id' => $foodId
+    );
+    return $wpdb->update('food',$data,$where);
 }
 function getIdOfRecord($type,$food){
     global $wpdb;

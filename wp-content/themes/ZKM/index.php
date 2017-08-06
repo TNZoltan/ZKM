@@ -41,8 +41,11 @@
                     <h1>{{ food.name }}</h1>
                 </div>
             </div>
-            <div style="clear: left; text-align: center;padding: 10px 0;">
-                <button @click="submitted()" class="btn btn-info form-control">Save items</button>
+            <div style="clear: left; text-align: center;">
+                <button id="save-list" @click="submitted()" class="btn btn-info form-control">Save items</button>
+            </div>
+            <div id="success">
+                Saved.
             </div>
         </div>
         <div id="recipes-finder" v-else-if="selectedView == 'recipesFinder'">
@@ -59,10 +62,37 @@
 <?php $foodList = getFoodList(); ?>
 
 <?php
-    foreach ($foodList as $food){
-        $food->checked = false;
+//Sorting the list
+function available( $a, $b ) {
+    if ($a->in_fridge == 0 && $b->in_fridge == 1){
+        return 1;
+    } else if ($a->in_fridge == 1 && $b->in_fridge == 0){
+        return -1;
+    } else
+        return 0;
+};
+usort($foodList,'available');
+
+$i = 1;
+while ($foodList[$i]->in_fridge == 1){
+    if ($foodList[$i-1]->priority > $foodList[$i]->priority){
+        $copy = $foodList[$i];
+        $foodList[$i] = $foodList[$i-1];
+        $foodList[$i-1] = $copy;
     }
+    $i++;
+}
+$i++;
+while (count($foodList) == $i){
+    if ($foodList[$i-1]->priority > $foodList[$i]->priority){
+        $copy = $foodList[$i];
+        $foodList[$i] = $foodList[$i-1];
+        $foodList[$i-1] = $copy;
+    }
+    $i++;
+}
 ?>
+
 
 <script>
     new Vue({
@@ -80,7 +110,26 @@
                 }
             },
             submitted: function () {
-
+                var data = {};
+                this.foodList.forEach(function(food){
+                    if (food.in_fridge){
+                        data[food.id] = food.in_fridge;
+                    }
+                });
+                jQuery.ajax({
+                    url: '<?php echo get_template_directory_uri() ?>/parts/save-list.php',
+                    method: 'POST',
+                    data: data,
+                    success: function (data){
+                        jQuery("#success").fadeIn();
+                        setTimeout(function(){
+                            jQuery("#success").fadeOut();
+                        }, 2000);
+                    },
+                    error: function (){
+                        jQuery('#save-list').innerHtml('There is a boo boo. Tell Zoltan.');
+                    }
+                });
             }
         },
         created: function (){
