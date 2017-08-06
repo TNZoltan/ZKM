@@ -34,7 +34,15 @@ function getRequest(){
 
 function getFoodList(){
     global $wpdb;
-    return $wpdb->get_results('SELECT id, name, img, priority, in_fridge FROM food');
+    return $wpdb->get_results('SELECT id AS "index", name, img, priority, in_fridge FROM food');
+}
+function getRecipeList(){
+    global $wpdb;
+    $recipeList = $wpdb->get_results('SELECT id, name, img FROM recipes');
+    foreach ($recipeList as $recipe){
+        $recipe->ingredients = $wpdb->get_results('SELECT food_id FROM food_recipes WHERE recipe_id="' . $recipe->id . '"');
+    }
+    return $recipeList;
 }
 function setFoodStatus($foodId,$status){
     global $wpdb;

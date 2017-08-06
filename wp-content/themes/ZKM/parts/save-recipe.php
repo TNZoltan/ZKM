@@ -21,7 +21,8 @@ global $wpdb;
 
 $wpdb->insert('recipes',array (
     'name' => $_GET['name'],
-    'page_id' => $post_id
+    'page_id' => $post_id,
+    'img' => 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg'
 ));
 
 foreach($_GET['food'] as $food){

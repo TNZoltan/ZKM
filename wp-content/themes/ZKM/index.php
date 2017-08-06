@@ -49,7 +49,22 @@
             </div>
         </div>
         <div id="recipes-finder" v-else-if="selectedView == 'recipesFinder'">
-            I am recipesFinder
+            <div id="recipes-header">
+                <span>You have the following ingredients:</span>
+                <span>
+                    <ul>
+                       <li v-for="food in foodList" v-if="food.in_fridge == 1">{{ food.name }}</li>
+                    </ul>
+                </span>
+            </div>
+            You can make...
+            <div id="recipeList">
+                <template v-for="recipe in recipeList">
+                    <div v-if="recipeIsAvailable(recipe)">
+                        {{ recipe.name }}
+                    </div>
+                </template>
+            </div>
         </div>
         <div id="shopping-list" v-else-if="selectedView == 'shoppingList'">
             I am shoppingList
@@ -60,6 +75,7 @@
 <?php get_template_part('parts/footer'); ?>
 
 <?php $foodList = getFoodList(); ?>
+<?php $recipeList = getRecipeList(); ?>
 
 <?php
 //Sorting the list
@@ -94,14 +110,33 @@ while (count($foodList) == $i){
 ?>
 
 
+
 <script>
     new Vue({
         el: '#app',
         data: {
-            selectedView: 'checkList', //TODO Save the latest one in session and put it here
-            foodList: {}
+            selectedView: 'recipesFinder', //TODO Save the latest one in session and put it here
+            foodList: {},
+            recipeList: {}
+            /*validRecipe: false*/
         },
         methods: {
+            recipeIsAvailable: function (recipe){
+                var allValid = true;
+                for(i = 0; i < recipe.ingredients.length; i++){
+                    var valid = false;
+                    for (j = 0; j < this.foodList.length; j++){
+                        if (this.foodList[j].in_fridge == "1"){
+                            if (this.foodList[j].index == recipe.ingredients[i].food_id){
+                                valid = true;
+                            }
+                        }
+                    }
+                    if (!valid) allValid = false;
+                    recipe.ingredients[i].available = valid;
+                }
+                return allValid;
+            },
             checked: function (food) {
                 if (food.in_fridge == "0"){
                     food.in_fridge = "1";
@@ -113,7 +148,7 @@ while (count($foodList) == $i){
                 var data = {};
                 this.foodList.forEach(function(food){
                     if (food.in_fridge){
-                        data[food.id] = food.in_fridge;
+                        data[food.index] = food.in_fridge;
                     }
                 });
                 jQuery.ajax({
@@ -125,15 +160,13 @@ while (count($foodList) == $i){
                         setTimeout(function(){
                             jQuery("#success").fadeOut();
                         }, 2000);
-                    },
-                    error: function (){
-                        jQuery('#save-list').innerHtml('There is a boo boo. Tell Zoltan.');
                     }
                 });
             }
         },
         created: function (){
             this.foodList = <?php echo json_encode($foodList); ?>;
+            this.recipeList = <?php echo json_encode($recipeList); ?>;
         }
     });
 

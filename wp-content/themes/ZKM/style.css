@@ -20,12 +20,19 @@ input[type='radio']{
     display: inline-block;
     text-align: center;
 }
+#navigation label img{
+    transition: all 0.3s ease;
+}
+#navigation label{
+    cursor: pointer;
+}
+#navigation label img:hover{
+    transform: scale(1.1);
+}
 .wrapper{
     display: inline-block;
     float: left;
-    transition: all 0.3s ease;
-    height: 93px;
-    margin-top: -3px;
+    height: 90px;
 }
 .check-list{
     width: 36%;
@@ -33,9 +40,6 @@ input[type='radio']{
     background: linear-gradient(-180deg,#B0E57C, #B0E50F);
     border-left: 1px solid #B0E200;
     border-bottom: 1px solid #B0E200;
-}
-.wrapper:hover{
-    transform: translateY(3px);
 }
 .shopping-list{
     width: 32%;
@@ -60,7 +64,7 @@ input[type='radio']{
     opacity: 0.8;
 }
 
-/* Content */
+/* Content - food list */
 
 #content{
     overflow: auto;
@@ -69,6 +73,7 @@ input[type='radio']{
 #content input[type=checkbox]{
     opacity: 0;
 }
+
 .food-wrapper{
     height: 200px;
     background-repeat: no-repeat;
@@ -76,7 +81,7 @@ input[type='radio']{
     background-size:cover;
     opacity: 0.8;
     transition: all 0.4s;
-    cursor: pointer;
+    cursor: crosshair;
 }
 .inactive{
     filter: grayscale(1);
@@ -124,6 +129,7 @@ input[type='radio']{
     display: none;
     opacity: 0.9;
 }
+
 
 /* Footer menu */
 #footer{
