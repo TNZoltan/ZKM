@@ -67,7 +67,7 @@
                             :class="[recipe.available == true ? 'available' : 'inavailable']"
                             v-show="(showAllRecipes && !recipe.available) || recipe.available"
                     >
-                        {{ recipe.name }}
+                        {{ recipe.name }} <template v-if="!recipe.available">- You need<template v-for="ingredient in recipe.ingredients" v-if="!ingredient.available">{{ ', ' + ingredient.name }}</template> to make this.</template>
                     </div>
                 </template>
             </div>
@@ -84,6 +84,15 @@
 <?php $recipeList = getRecipeList(); ?>
 
 <?php
+foreach($recipeList as $recipe){
+    foreach($recipe->ingredients as $ingredient){
+        foreach ($foodList as $food){
+            if (intval($food->index) == intval($ingredient->food_id)){
+                $ingredient->name = $food->name;
+            }
+        }
+    }
+}
 //Sorting the list
 function available( $a, $b ) {
     if ($a->in_fridge == 0 && $b->in_fridge == 1){
@@ -156,7 +165,7 @@ while (count($foodList) == $i){
             },
             updateRecipes: function () {
                 for (x = 0; x < this.recipeList.length; x++) {
-                    var allValid = true;
+                    var count = 0;
                     for (i = 0; i < this.recipeList[x].ingredients.length; i++) {
                         var valid = false;
                         for (j = 0; j < this.foodList.length; j++) {
@@ -166,11 +175,19 @@ while (count($foodList) == $i){
                                 }
                             }
                         }
-                        if (!valid) allValid = false;
+                        if (valid) count++;
                         this.$data.recipeList[x].ingredients[i].available = valid;
                     }
-                    this.$data.recipeList[x].available = allValid;
+                    if (count == this.recipeList[x].ingredients.length) {
+                        this.$data.recipeList[x].available = true;
+                    } else {
+                        this.$data.recipeList[x].available = false;
+                    }
+                    this.$data.recipeList[x].missing = this.recipeList[x].ingredients.length - count;
                 }
+                this.recipeList.sort(function(a,b){
+                    return a.missing - b.missing;
+                });
             }
         },
         created: function (){
