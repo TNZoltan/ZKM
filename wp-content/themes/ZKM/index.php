@@ -57,10 +57,16 @@
                     </ul>
                 </span>
             </div>
-            You can make...
+            <label for="showAllRecipes">
+                Show everything
+                <input id="showAllRecipes" class="checkbox-inline checkbox form-control" type="checkbox" v-model="showAllRecipes">
+            </label>
             <div id="recipeList">
                 <template v-for="recipe in recipeList">
-                    <div v-if="recipeIsAvailable(recipe)">
+                    <div
+                            :class="[recipe.available == true ? 'available' : 'inavailable']"
+                            v-show="(showAllRecipes && !recipe.available) || recipe.available"
+                    >
                         {{ recipe.name }}
                     </div>
                 </template>
@@ -117,26 +123,10 @@ while (count($foodList) == $i){
         data: {
             selectedView: 'recipesFinder', //TODO Save the latest one in session and put it here
             foodList: {},
-            recipeList: {}
-            /*validRecipe: false*/
+            recipeList: {},
+            showAllRecipes: false
         },
         methods: {
-            recipeIsAvailable: function (recipe){
-                var allValid = true;
-                for(i = 0; i < recipe.ingredients.length; i++){
-                    var valid = false;
-                    for (j = 0; j < this.foodList.length; j++){
-                        if (this.foodList[j].in_fridge == "1"){
-                            if (this.foodList[j].index == recipe.ingredients[i].food_id){
-                                valid = true;
-                            }
-                        }
-                    }
-                    if (!valid) allValid = false;
-                    recipe.ingredients[i].available = valid;
-                }
-                return allValid;
-            },
             checked: function (food) {
                 if (food.in_fridge == "0"){
                     food.in_fridge = "1";
@@ -159,14 +149,34 @@ while (count($foodList) == $i){
                         jQuery("#success").fadeIn();
                         setTimeout(function(){
                             jQuery("#success").fadeOut();
-                        }, 2000);
+                        }, 1000);
                     }
                 });
+                this.updateRecipes();
+            },
+            updateRecipes: function () {
+                for (x = 0; x < this.recipeList.length; x++) {
+                    var allValid = true;
+                    for (i = 0; i < this.recipeList[x].ingredients.length; i++) {
+                        var valid = false;
+                        for (j = 0; j < this.foodList.length; j++) {
+                            if (this.foodList[j].in_fridge == "1") {
+                                if (this.foodList[j].index == this.recipeList[x].ingredients[i].food_id) {
+                                    valid = true;
+                                }
+                            }
+                        }
+                        if (!valid) allValid = false;
+                        this.$data.recipeList[x].ingredients[i].available = valid;
+                    }
+                    this.$data.recipeList[x].available = allValid;
+                }
             }
         },
         created: function (){
             this.foodList = <?php echo json_encode($foodList); ?>;
             this.recipeList = <?php echo json_encode($recipeList); ?>;
+            this.updateRecipes();
         }
     });
 
