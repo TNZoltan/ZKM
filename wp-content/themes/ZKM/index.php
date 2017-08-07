@@ -29,6 +29,7 @@
             </label>
     </div>
     <div id="content" v-cloak>
+        <?php // The Ingredients Feature ?>
         <div id="check-list" v-if="selectedView == 'checkList'">
             <div
                     v-for="food in foodList"
@@ -48,28 +49,34 @@
                 Saved.
             </div>
         </div>
+
+        <?php // The Recipes Feature ?>
         <div id="recipes-finder" v-else-if="selectedView == 'recipesFinder'">
             <div id="recipes-header">
-                <span>You have the following ingredients:</span>
-                <span>
-                    <ul>
-                       <li v-for="food in foodList" v-if="food.in_fridge == 1">{{ food.name }}</li>
-                    </ul>
-                </span>
+                <div class="list">
+                    <span class="badge" v-for="food in foodList" v-if="food.in_fridge == 1">{{ food.name }}</span>
+                </div>
+                <div class="icon">
+                    <img src="<?php echo get_template_directory_uri() ?>/library/img/fridge.png">
+                </div>
             </div>
-            <label for="showAllRecipes">
-                Show everything
-                <input id="showAllRecipes" class="checkbox-inline checkbox form-control" type="checkbox" v-model="showAllRecipes">
-            </label>
-            <div id="recipeList">
-                <template v-for="recipe in recipeList">
-                    <div
-                            :class="[recipe.available == true ? 'available' : 'inavailable']"
-                            v-show="(showAllRecipes && !recipe.available) || recipe.available"
-                    >
-                        {{ recipe.name }} <template v-if="!recipe.available">- You need<template v-for="ingredient in recipe.ingredients" v-if="!ingredient.available">{{ ', ' + ingredient.name }}</template> to make this.</template>
-                    </div>
-                </template>
+            <div id="recipes-body">
+                <div class="row">
+                    <template v-for="recipe in recipeList">
+                        <div class="col-lg-4 col-md-6">
+                            <div
+                                    class="recipe row"
+                                    :class="[recipe.available == true ? 'ready' : 'non-ready']"
+                            >
+                                <div class="thumb" :style="{backgroundImage: 'url(' + recipe.img + ')'}"></div>
+                                <div class="name"><h4>{{ recipe.name }}   <img v-if="recipe.available" src="<?php echo get_template_directory_uri() ?>/library/img/tick.png"></h4></div>
+                                <div class="ingredients">
+                                    <span class="badge" v-for="ingredient in recipe.ingredients" :class="[ingredient.available ? 'available' : 'inavailable']">{{ ingredient.name }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
             </div>
         </div>
         <div id="shopping-list" v-else-if="selectedView == 'shoppingList'">
@@ -114,26 +121,28 @@ while ($foodList[$i]->in_fridge == 1){
     $i++;
 }
 $i++;
-while (count($foodList) == $i){
-    if ($foodList[$i-1]->priority > $foodList[$i]->priority){
-        $copy = $foodList[$i];
-        $foodList[$i] = $foodList[$i-1];
-        $foodList[$i-1] = $copy;
+if ($i != count($foodList)){
+    while (count($foodList) == $i){
+        if ($foodList[$i-1]->priority > $foodList[$i]->priority){
+            $copy = $foodList[$i];
+            $foodList[$i] = $foodList[$i-1];
+            $foodList[$i-1] = $copy;
+        }
+        $i++;
     }
-    $i++;
 }
 ?>
 
 
 
 <script>
+
     new Vue({
         el: '#app',
         data: {
             selectedView: 'recipesFinder', //TODO Save the latest one in session and put it here
             foodList: {},
-            recipeList: {},
-            showAllRecipes: false
+            recipeList: {}
         },
         methods: {
             checked: function (food) {
@@ -161,7 +170,6 @@ while (count($foodList) == $i){
                         }, 1000);
                     }
                 });
-                this.updateRecipes();
             },
             updateRecipes: function () {
                 for (x = 0; x < this.recipeList.length; x++) {
