@@ -69,7 +69,9 @@
                                     :class="[recipe.available == true ? 'ready' : 'non-ready']"
                             >
                                 <div class="thumb" :style="{backgroundImage: 'url(' + recipe.img + ')'}"></div>
-                                <div class="name"><h4>{{ recipe.name }}   <img v-if="recipe.available" src="<?php echo get_template_directory_uri() ?>/library/img/tick.png"></h4></div>
+                                <a :href="recipe.link">
+                                    <div class="name"><h4>{{ recipe.name }}   <img v-if="recipe.available" src="<?php echo get_template_directory_uri() ?>/library/img/tick.png"></h4></div>
+                                </a>
                                 <div class="ingredients">
                                     <span class="badge" v-for="ingredient in recipe.ingredients" :class="[ingredient.available ? 'available' : 'inavailable']">{{ ingredient.name }}</span>
                                 </div>

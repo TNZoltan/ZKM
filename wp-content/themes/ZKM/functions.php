@@ -38,9 +38,10 @@ function getFoodList(){
 }
 function getRecipeList(){
     global $wpdb;
-    $recipeList = $wpdb->get_results('SELECT id, name, img FROM recipes');
+    $recipeList = $wpdb->get_results('SELECT id, name, img, page_id FROM recipes');
     foreach ($recipeList as $recipe){
         $recipe->ingredients = $wpdb->get_results('SELECT food_id FROM food_recipes WHERE recipe_id="' . $recipe->id . '"');
+        $recipe->link = get_post_permalink($recipe->page_id);
     }
     return $recipeList;
 }

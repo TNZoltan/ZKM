@@ -253,6 +253,35 @@ input[type='radio']{
     font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
+/* The recipe */
+
+#the-recipe{
+    padding: 10px 0;
+}
+#the-recipe .title{
+    color: white;
+    font-family: "Courier New", Courier, monospace;
+}
+#the-recipe .desc{
+    color: black;
+    background: white;
+    border: 1px solid black;
+    padding: 10px;
+    font-family: "Courier New", Courier, monospace;
+
+}
+#the-recipe .img-thumbnail{
+    width: 400px;
+    margin-top: 70px;
+}
+@media screen and (max-width: 768px){
+    #the-recipe .img-thumbnail{
+        margin-top: 30px;
+    }
+}
+#the-recipe .col-sm-4{
+    text-align: center;
+}
 /* Rules */
 #rules{
     width: 70%;
