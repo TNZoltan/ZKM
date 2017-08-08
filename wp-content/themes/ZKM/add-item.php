@@ -51,7 +51,8 @@ Template Name: Item
             </div>
             <div class="form-group row">
                 <div style="text-align: center"">
-                <input type="submit" value="Submit" class="btn btn-success">
+                    <input type="submit" value="Submit" class="btn btn-success">
+                </div>
             </div>
         </form>
     </div>

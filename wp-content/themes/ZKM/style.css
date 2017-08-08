@@ -109,13 +109,14 @@ input[type='radio']{
     -webkit-user-select: none;
     user-select: none;
 }
-#save-list{
+.save-list{
     border-radius: 0 !important;
     padding: 5px;
 }
 #success{
     position: fixed;
     bottom: 50px;
+    z-index: 10;
     left: 50%;
     margin-left: -100px;
     border-radius: 5px;
@@ -212,9 +213,29 @@ input[type='radio']{
     border: 1px solid #C91D1D;
     background: transparent;
 }
+
+/* Content - shopping list */
+
+#shopping-list .row{
+    border: 1px solid #d9dfe5;
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 2px;
+}
+#shopping-list .container .done{
+    opacity: 0.5;
+    background-color: lightgray;
+}
+#shopping-list .container .tick{
+    outline: none;
+    border: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+}
 /* Footer menu */
 #footer{
-    text-align: center;
+    text-align: left;
     width: 100%;
     height: 25px;
     background: #E0E0E0;
@@ -230,4 +251,14 @@ input[type='radio']{
     color: white;
     font-size: 15px;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+/* Rules */
+#rules{
+    width: 70%;
+    border: 1px solid black;
+    margin: 20px 15%;
+    text-align: center;
+    font-family: "Courier New", Courier, monospace;
+    font-style: italic;
 }

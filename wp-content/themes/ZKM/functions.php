@@ -58,3 +58,7 @@ function getIdOfRecord($type,$food){
     global $wpdb;
     return $wpdb->get_var('SELECT id FROM '. $type . ' WHERE name = "' . $food . '"');
 }
+function getImgOfRecipe($id){
+    global $wpdb;
+    return $wpdb->get_var('SELECT img FROM recipes WHERE page_id = "' . $id . '"');
+}

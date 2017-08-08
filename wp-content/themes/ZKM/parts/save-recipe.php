@@ -17,12 +17,20 @@ $post_args = array(
 
 $post_id = wp_insert_post($post_args);
 
+include "simple_html_dom.php";
+$search_query = $_GET['name'];
+$search_query = urlencode( $search_query );
+$html = file_get_html( "https://www.google.com/search?q=$search_query&tbm=isch" );
+$containers = $html->getElementById('center_col');
+$image = $containers->getElementByTagName('img');
+$imageLink = $image->getAttribute('src');
+
 global $wpdb;
 
 $wpdb->insert('recipes',array (
     'name' => $_GET['name'],
     'page_id' => $post_id,
-    'img' => 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg'
+    'img' => $imageLink
 ));
 
 foreach($_GET['food'] as $food){

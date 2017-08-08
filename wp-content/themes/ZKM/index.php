@@ -16,7 +16,7 @@
 <div id="app">
     <div id="navigation" v-cloak>
             <label class="shopping-list wrapper">
-                <input type="radio" value="shoppingList" v-model="selectedView">
+                <input type="radio" value="recipesFinder" v-model="selectedView">
                 <img @click="setHeight()" src="<?php echo get_template_directory_uri() ?>/library/img/recipe.png">
             </label>
             <label class="check-list wrapper">
@@ -24,11 +24,14 @@
                 <img @click="setHeight()" src="<?php echo get_template_directory_uri() ?>/library/img/home.png">
             </label>
             <label class="recipes-button wrapper">
-                <input type="radio" value="recipesFinder" v-model="selectedView">
+                <input type="radio" value="shoppingList" v-model="selectedView">
                 <img @click="setHeight()" src="<?php echo get_template_directory_uri() ?>/library/img/apple.png">
             </label>
     </div>
     <div id="content" v-cloak>
+        <div id="success">
+            Saved.
+        </div>
         <?php // The Ingredients Feature ?>
         <div id="check-list" v-if="selectedView == 'checkList'">
             <div
@@ -43,10 +46,7 @@
                 </div>
             </div>
             <div style="clear: left; text-align: center;">
-                <button id="save-list" @click="submitted()" class="btn btn-info form-control">Save items</button>
-            </div>
-            <div id="success">
-                Saved.
+                <button class="save-list btn btn-info form-control" @click="submitted('check')">Save items</button>
             </div>
         </div>
 
@@ -79,8 +79,25 @@
                 </div>
             </div>
         </div>
+
+        <?php // The Shopping List Feature ?>
         <div id="shopping-list" v-else-if="selectedView == 'shoppingList'">
-            I am shoppingList
+            <div class="container">
+                    <div class="row"
+                         v-for="(food, key,index) in foodList"
+                         v-if="food.in_fridge == 0"
+                         :class="[checkItem(food.name) ? 'done' : 'not-done']">
+                        <div class="col-xs-6">
+                            <h4 class="title">{{ food.name }}</h4>
+                        </div>
+                        <div class="col-xs-6">
+                            <input class="tick form-control" type="checkbox" @click="updateItem(food.name)">
+                        </div>
+                    </div>
+            </div>
+            <div style="clear: left; text-align: center;" >
+                <button class="save-list btn btn-info form-control" @click="submitted('shopping')">Save items</button>
+            </div>
         </div>
     </div>
 </div>
@@ -140,11 +157,25 @@ if ($i != count($foodList)){
     new Vue({
         el: '#app',
         data: {
-            selectedView: 'recipesFinder', //TODO Save the latest one in session and put it here
+            selectedView: 'checkList',
             foodList: {},
-            recipeList: {}
+            recipeList: {},
+            shoppingList: []
         },
         methods: {
+            checkItem: function(name){
+                return this.shoppingList.includes(name);
+            },
+            updateItem: function(name){
+                if (this.checkItem(name)){
+                    var i = this.shoppingList.indexOf(name);
+                    if(i != -1) {
+                        this.shoppingList.splice(i, 1);
+                    }
+                } else {
+                    this.shoppingList.push(name);
+                }
+            },
             checked: function (food) {
                 if (food.in_fridge == "0"){
                     food.in_fridge = "1";
@@ -152,13 +183,26 @@ if ($i != count($foodList)){
                     food.in_fridge = "0";
                 }
             },
-            submitted: function () {
+            submitted: function (list) {
                 var data = {};
-                this.foodList.forEach(function(food){
-                    if (food.in_fridge){
-                        data[food.index] = food.in_fridge;
+                if (list == 'check'){
+                    this.foodList.forEach(function(food){
+                        if (food.in_fridge){
+                            data[food.index] = food.in_fridge;
+                        }
+                    });
+                } else if (list == 'shopping'){
+                    jQuery('input:checkbox:checked').prop('checked', false);
+                    for (j = 0; j<this.foodList.length;j++){
+                        for (i = 0; i<this.shoppingList.length;i++){
+                            if (this.foodList[j].name == this.shoppingList[i]){
+                                data[this.foodList[j].index] = '1';
+                                this.foodList[j].in_fridge = 1;
+                            }
+                        }
                     }
-                });
+                    this.shoppingList = [];
+                }
                 jQuery.ajax({
                     url: '<?php echo get_template_directory_uri() ?>/parts/save-list.php',
                     method: 'POST',
@@ -170,6 +214,7 @@ if ($i != count($foodList)){
                         }, 1000);
                     }
                 });
+                this.updateRecipes();
             },
             updateRecipes: function () {
                 for (x = 0; x < this.recipeList.length; x++) {
@@ -186,11 +231,7 @@ if ($i != count($foodList)){
                         if (valid) count++;
                         this.$data.recipeList[x].ingredients[i].available = valid;
                     }
-                    if (count == this.recipeList[x].ingredients.length) {
-                        this.$data.recipeList[x].available = true;
-                    } else {
-                        this.$data.recipeList[x].available = false;
-                    }
+                    this.$data.recipeList[x].available = (count == this.recipeList[x].ingredients.length);
                     this.$data.recipeList[x].missing = this.recipeList[x].ingredients.length - count;
                 }
                 this.recipeList.sort(function(a,b){
