@@ -155,7 +155,6 @@ if ($i != count($foodList)){
 
 
 <script>
-
     new Vue({
         el: '#app',
         data: {
