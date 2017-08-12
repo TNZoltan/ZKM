@@ -63,3 +63,7 @@ function getImgOfRecipe($id){
     global $wpdb;
     return $wpdb->get_var('SELECT img FROM recipes WHERE page_id = "' . $id . '"');
 }
+function isDevelopment(){
+    $url = get_home_url();
+    return (strpos($url,"localhost") >= 0);
+}

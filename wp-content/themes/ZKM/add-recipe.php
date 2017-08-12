@@ -39,8 +39,15 @@ Template Name: Recipe
                     <select id="dropdown-checkbox" name="food[]" multiple="multiple" class="form-control">
 
                         <?php $foodList = getFoodList(); ?>
-                        <?php foreach($foodList as $food){ ?>
-                             <option value="<?php echo $food->name; ?>"><?php echo $food->name; ?></option>
+                        <?php
+                            $foodNames = array();
+                            foreach($foodList as $food){
+                                array_push($foodNames,$food->name);
+                            }
+                            sort($foodNames)
+                        ?>
+                        <?php foreach($foodNames as $name){ ?>
+                             <option value="<?php echo $name; ?>"><?php echo $name; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -50,6 +57,7 @@ Template Name: Recipe
                     <input type="submit" value="Submit" class="btn btn-success">
                 </div>
             </div>
+        <input type="hidden" name="page" value="<?php echo get_the_ID(); ?>">
         </form>
     </div>
 </div>

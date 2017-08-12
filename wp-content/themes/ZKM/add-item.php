@@ -54,6 +54,7 @@ Template Name: Item
                     <input type="submit" value="Submit" class="btn btn-success">
                 </div>
             </div>
+            <input type="hidden" name="page" value="<?php echo get_the_ID(); ?>">
         </form>
     </div>
 </div>

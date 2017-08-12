@@ -9,7 +9,11 @@
 <?php /* enable this
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.min.js"></script>
 */ ?>
-<script src="<?php echo get_template_directory_uri() ?>/vue.js"></script>
+<?php if (isDevelopment()){ ?>
+    <script src="<?php echo get_template_directory_uri() ?>/vue.js"></script>
+<?php } else{ ?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.min.js"></script>
+<?php } ?>
 
 <?php get_template_part('parts/header'); ?>
 
@@ -70,7 +74,9 @@
                             >
                                 <div class="thumb" :style="{backgroundImage: 'url(' + recipe.img + ')'}"></div>
                                 <a :href="recipe.link">
-                                    <div class="name"><h4>{{ recipe.name }}   <img v-if="recipe.available" src="<?php echo get_template_directory_uri() ?>/library/img/tick.png"></h4></div>
+                                    <div class="name">
+                                        <h4>{{ recipe.name }}   <img v-if="recipe.available" src="<?php echo get_template_directory_uri() ?>/library/img/tick.png"></h4>
+                                    </div>
                                 </a>
                                 <div class="ingredients">
                                     <span class="badge" v-for="ingredient in recipe.ingredients" :class="[ingredient.available ? 'available' : 'inavailable']">{{ ingredient.name }}</span>
@@ -155,6 +161,9 @@ if ($i != count($foodList)){
 
 
 <script>
+    <?php if (!isDevelopment()): ?>
+        Vue.config.productionTip = false;
+    <?php endif; ?>
     new Vue({
         el: '#app',
         data: {

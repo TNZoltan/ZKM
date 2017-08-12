@@ -210,6 +210,17 @@ input[type='radio']{
     background-size: cover;
     margin: 8px;
 }
+@media screen and (max-width: 612px){
+    .recipe{
+        height: 130px;
+    }
+    .recipe .thumb{
+        margin: 13px;
+    }
+    .recipe .ingredients .badge{
+        font-size: 10px;
+    }
+}
 .recipe .name{
     display: inline-block;
     vertical-align: top;
