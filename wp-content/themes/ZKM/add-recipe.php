@@ -30,7 +30,7 @@ Template Name: Recipe
             <div class="form-group row">
                 <label for="desc" class="col-2 col-form-label">Description*</label>
                 <div class="col-10">
-                    <textarea class="form-control" id="desc" name="desc"></textarea>
+                    <textarea class="form-control" id="desc" name="desc" style="height: 250px"></textarea>
                 </div>
             </div>
             <div class="form-group row">

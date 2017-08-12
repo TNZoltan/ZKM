@@ -45,7 +45,7 @@
                     <h1>{{ food.name }}</h1>
                 </div>
             </div>
-            <div style="clear: left; text-align: center;">
+            <div class="save-wrapper" style="clear: left; text-align: center;">
                 <button class="save-list btn btn-info form-control" @click="submitted('check')">Save items</button>
             </div>
         </div>
@@ -97,7 +97,7 @@
                         </div>
                     </div>
             </div>
-            <div style="clear: left; text-align: center;" >
+            <div class="save-wrapper" style="clear: left; text-align: center;" >
                 <button class="save-list btn btn-info form-control" @click="submitted('shopping')">Save items</button>
             </div>
         </div>

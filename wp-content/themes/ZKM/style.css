@@ -64,6 +64,14 @@ input[type='radio']{
     opacity: 0.8;
 }
 
+@media screen and (max-width: 612px){
+    #navigation .wrapper img{
+        height: 40px;
+        width: 40px;
+        margin: 25px 0;
+    }
+}
+
 /* Content - food list */
 
 #content{
@@ -82,6 +90,14 @@ input[type='radio']{
     opacity: 0.8;
     transition: all 0.4s;
     cursor: crosshair;
+}
+@media screen and (max-width: 612px){
+    .food-wrapper{
+        height: 120px;
+    }
+    .food-wrapper .food-title h1{
+        font-size: 19px;
+    }
 }
 .inactive{
     filter: grayscale(1);
@@ -109,9 +125,14 @@ input[type='radio']{
     -webkit-user-select: none;
     user-select: none;
 }
+.save-wrapper{
+    height: 80px;
+}
 .save-list{
     border-radius: 0 !important;
-    padding: 5px;
+    padding: 39px 5px;
+    line-height: 0;
+    font-size: 25px;
 }
 #success{
     position: fixed;
@@ -237,19 +258,22 @@ input[type='radio']{
 #footer{
     text-align: left;
     width: 100%;
-    height: 25px;
+    height: 55px;
     background: #E0E0E0;
     margin-top: -1px;
+}
+#menu{
+    padding: 15px 0;
 }
 #menu ul li{
     display: inline;
     list-style-type: none;
     padding: 0;
-    margin: 0 10px;
+    margin: 10px;
 }
 #menu ul li a{
     color: white;
-    font-size: 15px;
+    font-size: 19px;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
