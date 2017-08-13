@@ -160,37 +160,6 @@ input[type='radio']{
 #recipes-finder{
     overflow: hidden;
 }
-#recipes-header{
-    background-color: #112341;
-    position: relative;
-    height: auto;
-}
-@media screen and (min-width: 1280px){
-    #content #recipes-header .list{
-        padding: 5px 100px;
-    }
-}
-#recipes-header .icon{
-    padding: 8px;
-    display: inline-block;
-    width: 100%;
-    text-align: center;
-}
-#recipes-header .icon img{
-    height: 40px;
-}
-
-#recipes-header .list{
-    display: inline-block;
-    height: auto;
-    text-align: left;
-    padding: 5px;
-}
-#recipes-header .list span{
-    background-color: transparent;
-    border: 1px solid white;
-}
-
 #recipes-body{
     padding: 5px 20px;
 }
@@ -248,7 +217,47 @@ input[type='radio']{
 }
 
 /* Content - shopping list */
+#shopping-header .badge{
+    font-size: 16px;
+    padding: 7px;
+    margin: 3px 5px;
+    transition: all 0.4s;
+}
+#shopping-header .badge:hover{
+    cursor: pointer;
+    background-color: white;
+    color: #112341;
+}
+#shopping-header{
+    background-color: #112341;
+    position: relative;
+    height: auto;
+}
+@media screen and (min-width: 1280px){
+    #content #shopping-header .list{
+        padding: 5px 100px;
+    }
+}
+#shopping-header .icon{
+    padding: 8px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+#shopping-header .icon img{
+    height: 40px;
+}
 
+#shopping-header .list{
+    display: inline-block;
+    height: auto;
+    text-align: left;
+    padding: 5px;
+}
+#shopping-header .list span{
+    background-color: transparent;
+    border: 1px solid white;
+}
 #shopping-list .row{
     border: 1px solid #d9dfe5;
     border-radius: 5px;

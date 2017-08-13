@@ -34,7 +34,7 @@ function getRequest(){
 
 function getFoodList(){
     global $wpdb;
-    return $wpdb->get_results('SELECT id AS "index", name, img, priority, in_fridge FROM food');
+    return $wpdb->get_results('SELECT id AS "index", name, img, priority, in_fridge, show_item FROM food');
 }
 function getRecipeList(){
     global $wpdb;
@@ -45,10 +45,30 @@ function getRecipeList(){
     }
     return $recipeList;
 }
+function showItemUpdate($foodId){
+    $data = array(
+        'show_item' => 1
+    );
+    $where = array(
+        'id' => $foodId
+    );
+    global $wpdb;
+    $wpdb->update('food',$data,$where);
+}
+function resetShoppingList(){
+    global $wpdb;
+    $wpdb->query('UPDATE food SET show_item = NULL');
+}
 function setFoodStatus($foodId,$status){
     global $wpdb;
+    if ($status == 1){
+        $timestamp = date("Y-m-d H:i:s");
+    } else {
+        $timestamp = null;
+    }
     $data = array(
-        'in_fridge' => $status
+        'in_fridge' => $status,
+        'timestamp' => $timestamp
     );
     $where = array(
         'id' => $foodId

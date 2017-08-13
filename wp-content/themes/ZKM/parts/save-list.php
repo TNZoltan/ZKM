@@ -13,7 +13,7 @@ $request = getRequest();
 
 foreach($foodList as $food){
     if(!empty($request[$food->index] || $request[$food->index] == "0")){
-        $message = setFoodStatus($food->index,intval($request[$food->index]));
+        setFoodStatus($food->index,intval($request[$food->index]));
     }
 }
 $response_array['status'] = 'success';

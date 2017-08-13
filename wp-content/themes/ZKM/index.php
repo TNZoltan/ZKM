@@ -56,14 +56,6 @@
 
         <?php // The Recipes Feature ?>
         <div id="recipes-finder" v-else-if="selectedView == 'recipesFinder'">
-            <div id="recipes-header">
-                <div class="list">
-                    <span class="badge" v-for="food in foodList" v-if="food.in_fridge == 1">{{ food.name }}</span>
-                </div>
-                <div class="icon">
-                    <img src="<?php echo get_template_directory_uri() ?>/library/img/fridge.png">
-                </div>
-            </div>
             <div id="recipes-body">
                 <div class="row">
                     <template v-for="recipe in recipeList">
@@ -90,10 +82,23 @@
 
         <?php // The Shopping List Feature ?>
         <div id="shopping-list" v-else-if="selectedView == 'shoppingList'">
+            <div id="shopping-header">
+                <div class="list">
+                    <span
+                            class="badge"
+                            v-for="food in foodList"
+                            v-if="food.in_fridge == 0 && food.priority == 3 && !food.show_item"
+                            @click="showItem(food)"
+                    >{{ food.name }} +</span>
+                </div>
+                <div class="icon">
+                    <img src="<?php echo get_template_directory_uri() ?>/library/img/fridge.png">
+                </div>
+            </div>
             <div class="container">
                     <div class="row"
                          v-for="(food, key,index) in foodList"
-                         v-if="food.in_fridge == 0"
+                         v-if="food.in_fridge == 0 && ((food.priority != 3) || (food.priority == 3 && food.show_item == 1))"
                          :class="[checkItem(food.name) ? 'done' : 'not-done']">
                         <div class="col-xs-6">
                             <h4 class="title">{{ food.name }}</h4>
@@ -167,12 +172,23 @@ if ($i != count($foodList)){
     new Vue({
         el: '#app',
         data: {
-            selectedView: 'checkList',
+            selectedView: 'shoppingList',
             foodList: {},
             recipeList: {},
             shoppingList: []
         },
         methods: {
+            showItem: function(food){
+                var data = {
+                    'id': food.index
+                };
+                jQuery.ajax({
+                    url: '<?php echo get_template_directory_uri() ?>/parts/show-item.php',
+                    method: 'POST',
+                    data: data
+                });
+                food.show_item = 1;
+            },
             checkItem: function(name){
                 return this.shoppingList.includes(name);
             },
