@@ -212,13 +212,14 @@ input[type='radio']{
 }
 @media screen and (max-width: 612px){
     .recipe{
-        height: 130px;
+        height: 160px;
     }
     .recipe .thumb{
-        margin: 13px;
+        margin: 28px 12px;
     }
     .recipe .ingredients .badge{
         font-size: 10px;
+        margin: 1px !important;
     }
 }
 .recipe .name{

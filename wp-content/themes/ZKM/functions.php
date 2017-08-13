@@ -65,5 +65,5 @@ function getImgOfRecipe($id){
 }
 function isDevelopment(){
     $url = get_home_url();
-    return (strpos($url,"localhost") >= 0);
+    return (strpos($url,"localhost"));
 }
