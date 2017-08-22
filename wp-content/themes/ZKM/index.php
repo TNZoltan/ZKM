@@ -64,8 +64,8 @@
                                     class="recipe row"
                                     :class="[recipe.available == true ? 'ready' : 'non-ready']"
                             >
-                                <div class="thumb" :style="{backgroundImage: 'url(' + recipe.img + ')'}"></div>
                                 <a :href="recipe.link">
+                                <div class="thumb" :style="{backgroundImage: 'url(' + recipe.img + ')'}"></div>
                                     <div class="name">
                                         <h4>{{ recipe.name }}   <img v-if="recipe.available" src="<?php echo get_template_directory_uri() ?>/library/img/tick.png"></h4>
                                     </div>
@@ -87,7 +87,7 @@
                     <span
                             class="badge"
                             v-for="food in foodList"
-                            v-if="food.in_fridge == 0 && food.priority == 3 && !food.show_item"
+                            v-if="food.in_fridge == 0 && food.priority != 1 && !food.show_item"
                             @click="showItem(food)"
                     >{{ food.name }} +</span>
                 </div>
@@ -98,7 +98,7 @@
             <div class="container">
                     <div class="row"
                          v-for="(food, key,index) in foodList"
-                         v-if="food.in_fridge == 0 && ((food.priority != 3) || (food.priority == 3 && food.show_item == 1))"
+                         v-if="food.in_fridge == 0 && ((food.priority == 1) || (food.priority != 1 && food.show_item == 1))"
                          :class="[checkItem(food.name) ? 'done' : 'not-done']">
                         <div class="col-xs-6">
                             <h4 class="title">{{ food.name }}</h4>
@@ -143,20 +143,29 @@ usort($foodList,'available');
 
 $i = 1;
 while ($foodList[$i]->in_fridge == 1){
-    if ($foodList[$i-1]->priority > $foodList[$i]->priority){
-        $copy = $foodList[$i];
-        $foodList[$i] = $foodList[$i-1];
-        $foodList[$i-1] = $copy;
+    $j = $i;
+    while ($j >= 1){
+        if ($foodList[$j-1]->name[0] > $foodList[$j]->name[0]){
+            $copy = $foodList[$j];
+            $foodList[$j] = $foodList[$j-1];
+            $foodList[$j-1] = $copy;
+        }
+        $j--;
     }
     $i++;
 }
 $i++;
+$border = $i;
 if ($i != count($foodList)){
-    while (count($foodList) == $i){
-        if ($foodList[$i-1]->priority > $foodList[$i]->priority){
-            $copy = $foodList[$i];
-            $foodList[$i] = $foodList[$i-1];
-            $foodList[$i-1] = $copy;
+    while (count($foodList) != $i){
+        $j = $i;
+        while ($j >= $border){
+            if ($foodList[$j-1]->name[0] > $foodList[$j]->name[0]){
+                $copy = $foodList[$j];
+                $foodList[$j] = $foodList[$j-1];
+                $foodList[$j-1] = $copy;
+            }
+            $j--;
         }
         $i++;
     }
@@ -172,7 +181,7 @@ if ($i != count($foodList)){
     new Vue({
         el: '#app',
         data: {
-            selectedView: 'shoppingList',
+            selectedView: 'checkList',
             foodList: {},
             recipeList: {},
             shoppingList: []
