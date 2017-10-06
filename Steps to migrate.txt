@@ -1,0 +1,3 @@
+Migration:
+1. Create WordPress install ON server
+2. Import .sql for three custom tables
